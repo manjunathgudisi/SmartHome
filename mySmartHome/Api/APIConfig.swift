@@ -131,7 +131,7 @@ class APIConfig: NSObject {
         return topVC
     }
     
-    private func getAuthenticationToken() -> String {
+    public func getAuthenticationToken() -> String {
         let username = "i302342"
         let password = "@SAPscpla1!"
         let loginString = NSString(format: "%@:%@", username, password)

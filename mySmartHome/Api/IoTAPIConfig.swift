@@ -38,7 +38,7 @@ class IoTAPIConfig: APIConfig {
         }
     }
     
-    public func readDeviceSensorType(_ device : Device, completionHandler: @escaping ([SensorType]?) -> Void) {
+    public func readSensorTypes(of device : Device, completionHandler: @escaping ([SensorType]?) -> Void) {
         
         var sensorTypes = [SensorType]()
         
@@ -58,22 +58,59 @@ class IoTAPIConfig: APIConfig {
             }
         }
         
+        //read all capabilities from sesnorTypes and save them to a single array
+        device.capabilities?.removeAll()
+        for sensorType in sensorTypes {
+            for capability in sensorType.capabilities! {
+                device.capabilities?.append(capability)
+            }
+        }
+        
         //return
         completionHandler(sensorTypes)
     }
     
-    public func readDeviceMeasures(_ device : Device, completionHandler: @escaping ([SensorType]?) -> Void) {
+    public func readDeviceMeasures(_ device : Device, completionHandler: @escaping ([DeviceMeasure]?) -> Void) {
         
-        let request = URLRequest(url: URL(string: BASE_URL + READ_DEVICE + device.alternateId!)!)
+        let request = URLRequest(url: URL(string: BASE_URL + READ_DEVICE + (device.id?.description)! + "/measures?skip=0&top=100")!)
         _ = executeAuthenticatedRequest(request: request) { (data, response, error) in
             guard let data = data, error == nil else {
                 completionHandler(nil)
                 return
             }
             let jsonObject = self.convertToJsonObject(data: data) as? [Any]
-            let list = Device.modelsFromDictionaryArray(array: (jsonObject! as NSArray))
+            let list = DeviceMeasure.modelsFromDictionaryArray(array: (jsonObject! as NSArray))
             completionHandler(list)
         }
+    }
+    
+    public func readDeviceMeasures(of capabailityID: String, device : Device, completionHandler: @escaping ([DeviceMeasure]?) -> Void) {
+        
+        let request = URLRequest(url: URL(string: BASE_URL + READ_DEVICE + (device.id?.description)! + "/measures" + "?filter=capabilityId%20eq%20" + capabailityID + "&skip=0&top=100")!)
+        _ = executeAuthenticatedRequest(request: request) { (data, response, error) in
+            guard let data = data, error == nil else {
+                completionHandler(nil)
+                return
+            }
+            let jsonObject = self.convertToJsonObject(data: data) as? [Any]
+            let list = DeviceMeasure.modelsFromDictionaryArray(array: (jsonObject! as NSArray))
+            completionHandler(list)
+        }
+    }
+    
+    override public func getAuthenticationToken() -> String {
+        /*
+        https://catalyst-poc.eu10.cp.iot.sap
+         User/pwd/tenant: datamodeler/Abcd1234/3
+         */
+        
+        let username = "datamodeler"
+        let password = "Abcd1234"
+        let loginString = NSString(format: "%@:%@", username, password)
+        let loginData = loginString.data(using: String.Encoding.utf8.rawValue)
+        let base64EncodedString = loginData?.base64EncodedString()
+        let authString = "Basic " + base64EncodedString!
+        return authString
     }
     
 }

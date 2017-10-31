@@ -12,19 +12,11 @@ import Foundation
  
 /* For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
-public class Device {
-	public var id : Int?
-	public var gatewayId : Int?
-	public var name : String?
-	public var alternateId : String?
-	public var creationTimestamp : Int?
-	public var status : String?
-	public var online : String?
-	public var sensors : Array<Sensor>?
-	public var authentications : Array<Authentications>?
-    
-    //ManjuGudisi: my own variables
-    public var capabilities : Array<Capabilities>?
+public class DeviceMeasure {
+	public var capabilityId : String?
+	public var sensorId : Int?
+	public var timestamp : Int?
+	public var measure : Measure?
 
 /**
     Returns an array of models based on given dictionary.
@@ -36,12 +28,12 @@ public class Device {
 
     - returns: Array of Json4Swift_Base Instances.
 */
-    public class func modelsFromDictionaryArray(array:NSArray) -> [Device]
+    public class func modelsFromDictionaryArray(array:NSArray) -> [DeviceMeasure]
     {
-        var models:[Device] = []
+        var models:[DeviceMeasure] = []
         for item in array
         {
-            models.append(Device(dictionary: item as! NSDictionary)!)
+            models.append(DeviceMeasure(dictionary: item as! NSDictionary)!)
         }
         return models
     }
@@ -58,19 +50,10 @@ public class Device {
 */
 	required public init?(dictionary: NSDictionary) {
 
-		id = dictionary["id"] as? Int
-		gatewayId = dictionary["gatewayId"] as? Int
-		name = dictionary["name"] as? String
-		alternateId = dictionary["alternateId"] as? String
-		creationTimestamp = dictionary["creationTimestamp"] as? Int
-		status = dictionary["status"] as? String
-		online = dictionary["online"] as? String
-        if (dictionary["sensors"] != nil) {
-            sensors = Sensor.modelsFromDictionaryArray(array: dictionary["sensors"] as! NSArray)
-        }
-        if (dictionary["authentications"] != nil) {
-            authentications = Authentications.modelsFromDictionaryArray(array: dictionary["authentications"] as! NSArray)
-        }
+		capabilityId = dictionary["capabilityId"] as? String
+		sensorId = dictionary["sensorId"] as? Int
+		timestamp = dictionary["timestamp"] as? Int
+		if (dictionary["measure"] != nil) { measure = Measure(dictionary: dictionary["measure"] as! NSDictionary) }
 	}
 
 		
@@ -83,13 +66,10 @@ public class Device {
 
 		let dictionary = NSMutableDictionary()
 
-		dictionary.setValue(self.id, forKey: "id")
-		dictionary.setValue(self.gatewayId, forKey: "gatewayId")
-		dictionary.setValue(self.name, forKey: "name")
-		dictionary.setValue(self.alternateId, forKey: "alternateId")
-		dictionary.setValue(self.creationTimestamp, forKey: "creationTimestamp")
-		dictionary.setValue(self.status, forKey: "status")
-		dictionary.setValue(self.online, forKey: "online")
+		dictionary.setValue(self.capabilityId, forKey: "capabilityId")
+		dictionary.setValue(self.sensorId, forKey: "sensorId")
+		dictionary.setValue(self.timestamp, forKey: "timestamp")
+		dictionary.setValue(self.measure?.dictionaryRepresentation(), forKey: "measure")
 
 		return dictionary
 	}
