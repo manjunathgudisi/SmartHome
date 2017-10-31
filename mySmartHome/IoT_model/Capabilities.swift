@@ -12,7 +12,7 @@ import Foundation
  
 /* For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
-public class Capabilities {
+public class Capability {
 	public var id : String?
 	public var name : String?
 	public var alternateId : String?
@@ -28,12 +28,12 @@ public class Capabilities {
 
     - returns: Array of Json4Swift_Base Instances.
 */
-    public class func modelsFromDictionaryArray(array:NSArray) -> [Capabilities]
+    public class func modelsFromDictionaryArray(array:NSArray) -> [Capability]
     {
-        var models:[Capabilities] = []
+        var models:[Capability] = []
         for item in array
         {
-            models.append(Capabilities(dictionary: item as! NSDictionary)!)
+            models.append(Capability(dictionary: item as! NSDictionary)!)
         }
         return models
     }

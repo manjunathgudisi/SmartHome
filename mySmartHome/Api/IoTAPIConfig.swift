@@ -10,30 +10,36 @@ import UIKit
 
 class IoTAPIConfig: APIConfig {
 
-    private let BASE_URL = "https://com-iotaedemo.eu10.cp.iot.sap/iot/core/api/"
+    static public let IoT_tenant_host = UserDefaults.standard.string(forKey: "tenant_host_preference")!
+    static public let IoT_tenant_ID = UserDefaults.standard.string(forKey: "tenant_id_preference")!
+    static public let Device_ID = UserDefaults.standard.string(forKey: "device_id_preference")!
+    
+    private let BASE_URL = "https://" + IoTAPIConfig.IoT_tenant_host + "/iot/core/api/"
     
     private let READ_DEVICE = "v1/devices/"
     private let READ_SENSORTYPE = "v1/sensorTypes/"
     private let READ_CAPABILITIES = "v1/capabilities/"
     
     private static var iotApiConfig : IoTAPIConfig? = nil
+    public var device : Device? = nil
     
-//    static func instance() -> IoTAPIConfig {
-//        if (iotApiConfig == nil) {
-//            iotApiConfig = IoTAPIConfig()
-//        }
-//        return iotApiConfig!
-//    }
+    static func iotInstance() -> IoTAPIConfig {
+        if (iotApiConfig == nil) {
+            iotApiConfig = IoTAPIConfig()
+        }
+        return iotApiConfig!
+    }
     
-    public func readDevice(_ deviceId : String, completionHandler: @escaping ([Device]?) -> Void) {
-        let request = URLRequest(url: URL(string: BASE_URL + READ_DEVICE + deviceId)!)
+    public func readDevice(_ completionHandler: @escaping ([Device]?) -> Void) {
+        let url = URL(string: BASE_URL + READ_DEVICE + IoTAPIConfig.Device_ID)!
+        let request = URLRequest(url: url)
         _ = executeAuthenticatedRequest(request: request) { (data, response, error) in
             guard let data = data, error == nil else {
                 completionHandler(nil)
                 return
             }
-            let jsonObject = self.convertToJsonObject(data: data) as? [Any]
-            let list = Device.modelsFromDictionaryArray(array: (jsonObject! as NSArray))
+            let jsonObject = self.convertToJsonObject(data: data) as? [String:Any]
+            let list = Device.modelsFromDictionaryArray(array: [jsonObject as Any])
             completionHandler(list)
         }
     }
@@ -41,9 +47,15 @@ class IoTAPIConfig: APIConfig {
     public func readSensorTypes(of device : Device, completionHandler: @escaping ([SensorType]?) -> Void) {
         
         var sensorTypes = [SensorType]()
+        device.capabilities.removeAll()
         
         //get sensorTypes for all sensors of the device
         for sensor in device.sensors! {
+            
+            //ignore if sensorTypeId == 0
+            if sensor.sensorTypeId == "0" {
+                continue
+            }
             
             //then, request sensorType information
             let request = URLRequest(url: URL(string: BASE_URL + READ_SENSORTYPE + (sensor.sensorTypeId?.description)!)!)
@@ -52,17 +64,16 @@ class IoTAPIConfig: APIConfig {
                     completionHandler(nil)
                     return
                 }
-                let jsonObject = self.convertToJsonObject(data: data) as? [Any]
-                let list = SensorType.modelsFromDictionaryArray(array: (jsonObject! as NSArray))
+                let jsonObject = self.convertToJsonObject(data: data) as? [String:Any]
+                let list = SensorType.modelsFromDictionaryArray(array: [jsonObject as Any])
                 sensorTypes.append(contentsOf: list)
-            }
-        }
-        
-        //read all capabilities from sesnorTypes and save them to a single array
-        device.capabilities?.removeAll()
-        for sensorType in sensorTypes {
-            for capability in sensorType.capabilities! {
-                device.capabilities?.append(capability)
+                
+                //read all capabilities from sesnorTypes and save them to a single array
+                for sensorType in list {
+                    for capability in sensorType.capabilities! {
+                        device.capabilities.append(capability)
+                    }
+                }
             }
         }
         
@@ -100,6 +111,7 @@ class IoTAPIConfig: APIConfig {
     
     override public func getAuthenticationToken() -> String {
         /*
+         These details given by Mayur: it stores the data in PostgrySQL DB provided by IoT4.0 platform
         https://catalyst-poc.eu10.cp.iot.sap
          User/pwd/tenant: datamodeler/Abcd1234/3
          */

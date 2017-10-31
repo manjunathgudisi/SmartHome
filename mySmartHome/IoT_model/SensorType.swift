@@ -16,7 +16,7 @@ public class SensorType {
 	public var id : String?
 	public var alternateId : Int?
 	public var name : String?
-	public var capabilities : Array<Capabilities>?
+	public var capabilities : Array<Capability>?
 
 /**
     Returns an array of models based on given dictionary.
@@ -53,7 +53,9 @@ public class SensorType {
 		id = dictionary["id"] as? String
 		alternateId = dictionary["alternateId"] as? Int
 		name = dictionary["name"] as? String
-        if (dictionary["capabilities"] != nil) { capabilities = Capabilities.modelsFromDictionaryArray(array: dictionary["capabilities"] as! NSArray) }
+        if (dictionary["capabilities"] != nil) {
+            capabilities = Capability.modelsFromDictionaryArray(array: dictionary["capabilities"] as! NSArray)
+        }
 	}
 
 		

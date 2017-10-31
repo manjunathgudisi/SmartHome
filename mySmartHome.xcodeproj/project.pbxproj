@@ -26,6 +26,7 @@
 		273D832D1F9CA695004AB1E8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273D832C1F9CA695004AB1E8 /* HomeViewController.swift */; };
 		2790FF1D1FA89EDE00FF67CD /* DeviceMeasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2790FF1B1FA89EDE00FF67CD /* DeviceMeasure.swift */; };
 		2790FF1E1FA89EDE00FF67CD /* Measure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2790FF1C1FA89EDE00FF67CD /* Measure.swift */; };
+		2790FF201FA8A3B000FF67CD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2790FF1F1FA8A3B000FF67CD /* Settings.bundle */; };
 		27AD973F1FA5BE090063E28A /* ServiceRequestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AD973E1FA5BE090063E28A /* ServiceRequestsTableViewController.swift */; };
 		27AD97461FA5BEF80063E28A /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AD97411FA5BEF80063E28A /* Customer.swift */; };
 		27AD97471FA5BEF80063E28A /* InsuranceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AD97421FA5BEF80063E28A /* InsuranceRequest.swift */; };
@@ -60,6 +61,7 @@
 		273D832C1F9CA695004AB1E8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2790FF1B1FA89EDE00FF67CD /* DeviceMeasure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceMeasure.swift; sourceTree = "<group>"; };
 		2790FF1C1FA89EDE00FF67CD /* Measure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Measure.swift; sourceTree = "<group>"; };
+		2790FF1F1FA8A3B000FF67CD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		27AD973E1FA5BE090063E28A /* ServiceRequestsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRequestsTableViewController.swift; sourceTree = "<group>"; };
 		27AD97411FA5BEF80063E28A /* Customer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		27AD97421FA5BEF80063E28A /* InsuranceRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsuranceRequest.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				271D87441F94C3ED00CF1E35 /* Assets.xcassets */,
 				271D87461F94C3ED00CF1E35 /* LaunchScreen.storyboard */,
 				271D87491F94C3ED00CF1E35 /* Info.plist */,
+				2790FF1F1FA8A3B000FF67CD /* Settings.bundle */,
 			);
 			path = mySmartHome;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				271D87451F94C3ED00CF1E35 /* Assets.xcassets in Resources */,
 				271D87431F94C3ED00CF1E35 /* Main.storyboard in Resources */,
 				2725BF751F9DC7210046B892 /* home_icon.png in Resources */,
+				2790FF201FA8A3B000FF67CD /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

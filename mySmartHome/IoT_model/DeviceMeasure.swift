@@ -14,7 +14,7 @@ import Foundation
 
 public class DeviceMeasure {
 	public var capabilityId : String?
-	public var sensorId : Int?
+	public var sensorId : String?
 	public var timestamp : Int?
 	public var measure : Measure?
 
@@ -51,7 +51,7 @@ public class DeviceMeasure {
 	required public init?(dictionary: NSDictionary) {
 
 		capabilityId = dictionary["capabilityId"] as? String
-		sensorId = dictionary["sensorId"] as? Int
+		sensorId = dictionary["sensorId"] as? String
 		timestamp = dictionary["timestamp"] as? Int
 		if (dictionary["measure"] != nil) { measure = Measure(dictionary: dictionary["measure"] as! NSDictionary) }
 	}

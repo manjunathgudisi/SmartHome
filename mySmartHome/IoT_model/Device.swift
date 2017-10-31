@@ -13,18 +13,18 @@ import Foundation
 /* For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 public class Device {
-	public var id : Int?
-	public var gatewayId : Int?
+	public var id : String?
+	public var gatewayId : String?
 	public var name : String?
 	public var alternateId : String?
 	public var creationTimestamp : Int?
 	public var status : String?
-	public var online : String?
+	public var online : Int?
 	public var sensors : Array<Sensor>?
 	public var authentications : Array<Authentications>?
     
     //ManjuGudisi: my own variables
-    public var capabilities : Array<Capabilities>?
+    public var capabilities = [Capability]()
 
 /**
     Returns an array of models based on given dictionary.
@@ -58,13 +58,13 @@ public class Device {
 */
 	required public init?(dictionary: NSDictionary) {
 
-		id = dictionary["id"] as? Int
-		gatewayId = dictionary["gatewayId"] as? Int
+		id = dictionary["id"] as? String
+		gatewayId = dictionary["gatewayId"] as? String
 		name = dictionary["name"] as? String
 		alternateId = dictionary["alternateId"] as? String
 		creationTimestamp = dictionary["creationTimestamp"] as? Int
 		status = dictionary["status"] as? String
-		online = dictionary["online"] as? String
+		online = dictionary["online"] as? Int
         if (dictionary["sensors"] != nil) {
             sensors = Sensor.modelsFromDictionaryArray(array: dictionary["sensors"] as! NSArray)
         }

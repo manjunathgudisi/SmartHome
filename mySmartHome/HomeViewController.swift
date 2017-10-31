@@ -30,6 +30,9 @@ class HomeViewController : UIViewController, ChartDelegate {
     var customers = [Customer]()
     @IBOutlet var loyaltyPointsCountLabel: UILabel!
     
+    private var hasCapabilities = false
+    private var timerToCheckCapabilities : Timer? = nil
+    
     //MARK: - Utils
     
     override func viewDidLoad() {
@@ -40,20 +43,39 @@ class HomeViewController : UIViewController, ChartDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //get backend data
-        getServiceRequests()
-        getLoanRequests()
-        getInsuranceRequests()
-        getCustomers()
+        //does device has any capabilities
+        //print("Device capabilities count " + (IoTAPIConfig.iotInstance().device?.capabilities?.count.description)!)
         
-        //draw graphs
+        timerToCheckCapabilities = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
+            DispatchQueue.main.async {
+                self.checkCapabilities()
+            }
+        }
+        
+        //get backend data
+        getBackendData()
+    }
+    
+    //MARK: - Check for capabilities
+    
+    @objc func checkCapabilities() {
+        if IoTAPIConfig.iotInstance().device?.capabilities.count == 0 {
+            hasCapabilities = false
+        } else {
+            hasCapabilities = true
+            drawCharts()
+            timerToCheckCapabilities?.invalidate() //no need of timer now
+        }
+    }
+    
+    //MARK: - Draw charts
+    
+    func drawCharts() {
         drawTemperatureChart()
         drawHumidityChart()
         drawLightChart()
         activityController.startAnimating()
     }
-    
-    //MARK: - Draw charts
     
     func drawTemperatureChart() {
         let data = [(x: 0.0, y: 0),
@@ -126,7 +148,14 @@ class HomeViewController : UIViewController, ChartDelegate {
         // Do something when ending touching chart
     }
     
-    //MARK: - Get data
+    //MARK: - Get backend data
+    
+    func getBackendData() {
+        getServiceRequests()
+        getLoanRequests()
+        getInsuranceRequests()
+        getCustomers()
+    }
     
     func getServiceRequests() {
         APIConfig.instance().getServiceRequests { (list) in

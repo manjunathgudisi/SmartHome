@@ -13,7 +13,7 @@ import Foundation
 /* For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 public class Measure {
-	public var sound : Double?
+	public var measure : Double?
 
 /**
     Returns an array of models based on given dictionary.
@@ -47,7 +47,7 @@ public class Measure {
 */
 	required public init?(dictionary: NSDictionary) {
 
-		sound = dictionary["sound"] as? Double
+		measure = dictionary["measure"] as? Double
 	}
 
 		
@@ -60,7 +60,7 @@ public class Measure {
 
 		let dictionary = NSMutableDictionary()
 
-		dictionary.setValue(self.sound, forKey: "sound")
+		dictionary.setValue(self.measure, forKey: "sound")
 
 		return dictionary
 	}

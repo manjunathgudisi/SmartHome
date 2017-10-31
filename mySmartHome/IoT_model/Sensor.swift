@@ -13,9 +13,9 @@ import Foundation
 /* For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 public class Sensor {
-	public var id : Int?
-	public var deviceId : Int?
-	public var sensorTypeId : Int?
+	public var id : String?
+	public var deviceId : String?
+	public var sensorTypeId : String?
 	public var name : String?
 	public var alternateId : String?
 
@@ -51,9 +51,9 @@ public class Sensor {
 */
 	required public init?(dictionary: NSDictionary) {
 
-		id = dictionary["id"] as? Int
-		deviceId = dictionary["deviceId"] as? Int
-		sensorTypeId = dictionary["sensorTypeId"] as? Int
+		id = dictionary["id"] as? String
+		deviceId = dictionary["deviceId"] as? String
+		sensorTypeId = dictionary["sensorTypeId"] as? String
 		name = dictionary["name"] as? String
 		alternateId = dictionary["alternateId"] as? String
 	}

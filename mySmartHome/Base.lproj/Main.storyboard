@@ -87,7 +87,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="BN0-Lb-gWK" kind="show" id="sEc-GO-1Ok"/>
+                                            <action selector="loginButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Arc-qt-Xca"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -119,16 +119,29 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="KQC-b5-DPe">
+                                <rect key="frame" x="178" y="613" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="8ir-3Y-cNA"/>
+                                    <constraint firstAttribute="height" constant="20" id="g0p-VR-R8A"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="KQC-b5-DPe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="66x-xq-Zij"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZPB-2q-0d2" secondAttribute="trailing" constant="16" id="Dlt-CH-hnP"/>
                             <constraint firstItem="ZPB-2q-0d2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="74" id="J7A-o6-LqU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KQC-b5-DPe" secondAttribute="bottom" constant="34" id="Qdg-Yo-njf"/>
                             <constraint firstItem="ZPB-2q-0d2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="ggR-qL-AsP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="shN-Mc-F61"/>
+                    <connections>
+                        <outlet property="activityIndiactor" destination="KQC-b5-DPe" id="Tph-hS-IdO"/>
+                        <segue destination="BN0-Lb-gWK" kind="show" identifier="showDashboard" id="9u4-SF-sQl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
