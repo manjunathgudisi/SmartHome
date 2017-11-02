@@ -20,6 +20,9 @@ class APIConfig: NSObject {
     
     private static var apiConfig : APIConfig? = nil
     
+    public var customerName = ""
+    public var customer : Customer? = nil
+    
     static func instance() -> APIConfig {
         if (apiConfig == nil) {
             apiConfig = APIConfig()

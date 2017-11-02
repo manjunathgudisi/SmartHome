@@ -11,7 +11,8 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet var activityIndiactor: UIActivityIndicatorView!
-    
+    @IBOutlet var usernameTextField: UITextField!
+    @IBOutlet var passwordTextField: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +26,15 @@ class ViewController: UIViewController {
     
     @IBAction func loginButtonAction(_ sender: Any) {
         
-        activityIndiactor.stopAnimating()
+        //validate
+        if (usernameTextField.text?.isEmpty)! {
+            APIConfig.instance().showAlert(title: "", message: "Please enter login details")
+            return
+        }
+        
+        //if valid, then
+        APIConfig.instance().customerName = usernameTextField.text!
+        activityIndiactor.startAnimating()
         
         //read device
         IoTAPIConfig.iotInstance().readDevice { (devices) in

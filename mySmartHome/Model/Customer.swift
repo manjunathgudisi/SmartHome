@@ -16,7 +16,9 @@ public class Customer {
 	public var id : Int?
 	public var name : String?
 	public var address : String?
-	public var mobile : Int?
+	public var mobile : String?
+    public var loyalty_points : String?
+    public var iot_device_id : String?
 
 /**
     Returns an array of models based on given dictionary.
@@ -53,7 +55,9 @@ public class Customer {
 		id = dictionary["id"] as? Int
 		name = dictionary["name"] as? String
 		address = dictionary["address"] as? String
-		mobile = dictionary["mobile"] as? Int
+		mobile = dictionary["mobile"] as? String
+        loyalty_points = dictionary["loyalty_point"] as? String
+        iot_device_id = dictionary["iot_device_id"] as? String
 	}
 
 		
@@ -70,6 +74,8 @@ public class Customer {
 		dictionary.setValue(self.name, forKey: "name")
 		dictionary.setValue(self.address, forKey: "address")
 		dictionary.setValue(self.mobile, forKey: "mobile")
+        dictionary.setValue(self.loyalty_points, forKey: "loyalty_points")
+        dictionary.setValue(self.iot_device_id, forKey: "iot_device_id")
 
 		return dictionary
 	}

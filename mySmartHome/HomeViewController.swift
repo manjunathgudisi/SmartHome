@@ -194,9 +194,18 @@ class HomeViewController : UIViewController, ChartDelegate {
         APIConfig.instance().getCustomers { (list) in
             self.customers.removeAll()
             self.customers = list!
+            self.findRelavantCustomer()
             DispatchQueue.main.async {
-                print("customers count: " + self.serviceRequests.count.description)
-                self.loyaltyPointsCountLabel.text = self.serviceRequests.count.description
+                print("customers count: " + self.customers.count.description)
+                self.loyaltyPointsCountLabel.text = APIConfig.instance().customer?.loyalty_points
+            }
+        }
+    }
+    
+    func findRelavantCustomer() {
+        for customer in customers {
+            if customer.name?.lowercased() == APIConfig.instance().customerName.lowercased() {
+                APIConfig.instance().customer = customer
             }
         }
     }
