@@ -133,9 +133,12 @@ class IoTAPIConfig: APIConfig {
         }
     }
     
-    public func readDeviceMeasures(of capabailityID: String, device : Device, completionHandler: @escaping ([DeviceMeasure]?) -> Void) {
+    public func readDeviceMeasures(of capability: Capability, device : Device, completionHandler: @escaping ([DeviceMeasure]?) -> Void) {
         
-        let request = URLRequest(url: URL(string: BASE_URL + READ_DEVICE + (device.id?.description)! + "/measures" + "?filter=capabilityId%20eq%20" + capabailityID + "&skip=0&top=100")!)
+        let deviceMeasuresURLString = (BASE_URL + READ_DEVICE + (device.id?.description)! + "/measures")
+        
+        let request = URLRequest(url: URL(string: deviceMeasuresURLString + "?filter=capabilityId%20eq%20" + (capability.id)! + "&skip=0&top=200")!)
+        
         _ = executeAuthenticatedRequest(request: request) { (data, response, error) in
             guard let data = data, error == nil else {
                 completionHandler(nil)

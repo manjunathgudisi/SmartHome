@@ -12,8 +12,14 @@ import SwiftChart
 class HomeViewController : UIViewController, ChartDelegate {
     
     @IBOutlet var temperatureChart: Chart!
+    @IBOutlet var temperatureChartLabel: UILabel!
+    
     @IBOutlet var humidityChart: Chart!
+    @IBOutlet var humidityChartLabel: UILabel!
+    
     @IBOutlet var lightChart: Chart!
+    @IBOutlet var lightChartLabel: UILabel!
+    
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var scrollContentView: UIView!
     @IBOutlet var activityController: UIActivityIndicatorView!
@@ -30,11 +36,17 @@ class HomeViewController : UIViewController, ChartDelegate {
     var customers = [Customer]()
     @IBOutlet var loyaltyPointsCountLabel: UILabel!
     
+    private var timerToRefreshCharts : Timer? = nil
+    private var dateFormatter = DateFormatter()
+    
     //MARK: - Utils
     
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.contentSize = CGSize(width: view.frame.size.width, height: scrollContentView.frame.size.height)
+        
+        //setup dateFormatter
+        dateFormatter.dateFormat = "HH.mm"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,10 +56,24 @@ class HomeViewController : UIViewController, ChartDelegate {
         getBackendData()
         
         //draw charts
-        drawCharts()
+        enableTimerToRefreshCharts()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        timerToRefreshCharts?.invalidate()
+        super.viewWillDisappear(animated)
     }
     
     //MARK: - Draw charts
+    
+    func enableTimerToRefreshCharts() {
+        //timer for refreshing charts
+        timerToRefreshCharts = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { (timer) in
+            DispatchQueue.main.async {
+                self.drawCharts()
+            }
+        }
+    }
     
     func drawCharts() {
         drawTemperatureChart()
@@ -56,52 +82,72 @@ class HomeViewController : UIViewController, ChartDelegate {
         activityController.startAnimating()
     }
     
-    func drawTemperatureChart() {
-        let data = [(x: 0.0, y: 0),
-                    (x: 3, y: 2.5),
-                    (x: 4, y: -2),
-                    (x: 5, y: 2.3),
-                    (x: 7, y: 3),
-                    (x: 8, y: 2.2),
-                    (x: 9, y: 2.5)]
-        let series = ChartSeries(data: data)
-        series.color = ChartColors.greyColor()
+    func drawChart(_ chart: Chart, deviceMeasures: [DeviceMeasure], seriesColor: UIColor) {
+        var chartData = [(x: Float, y: Float)]()
+        for deviceMeasure in deviceMeasures {
+            let timeInternal = TimeInterval(deviceMeasure.timestamp!)/1000
+            let stringValue = self.dateFormatter.string(from: Date(timeIntervalSince1970:timeInternal))
+            print(stringValue)
+            let object = (x: Float(stringValue)!, y: Float((deviceMeasure.measure?.value)!))
+            chartData.append(object)
+        }
+        
+        //remove if any series
+        chart.series.removeAll()
+        
+        //then, add series
+        let series = ChartSeries(data: chartData)
+        series.color = seriesColor
         series.area = true
-        temperatureChart.add(series)
-        temperatureChart.delegate = self
-        temperatureChart.xLabelsFormatter = { String(Int(round($1))) + "h" }
+        chart.add(series)
+        chart.delegate = self
+        chart.xLabelsFormatter = {
+            String($1).replacingOccurrences(of: ".", with: ":")
+        }
+    }
+    
+    func drawTemperatureChart() {
+        let device = IoTAPIConfig.iotInstance().device
+        let capability = IoTAPIConfig.iotInstance().device?.capabilities[0]
+        //temperatureChartLabel.text = String(format: "   %@", (capability?.properties![0].name?.uppercased())!)
+        IoTAPIConfig.iotInstance().readDeviceMeasures(of: capability!,
+                                                      device: device!) { (deviceMeasures) in
+                                                        
+                                                        DispatchQueue.main.async {
+                                                            self.drawChart(self.temperatureChart,
+                                                                           deviceMeasures: deviceMeasures!,
+                                                                           seriesColor: ChartColors.darkGreenColor())
+                                                        } 
+        }
     }
     
     func drawHumidityChart() {
-        let data = [(x: 0.0, y: 0),
-                    (x: 3, y: 5.5),
-                    (x: 4, y: 2),
-                    (x: 5, y: 2.3),
-                    (x: 7, y: 7),
-                    (x: 8, y: 3.2),
-                    (x: 9, y: 4.5)]
-        let series = ChartSeries(data: data)
-        series.color = ChartColors.blueColor()
-        series.area = true
-        humidityChart.add(series)
-        humidityChart.delegate = self
-        humidityChart.xLabelsFormatter = { String(Int(round($1))) + "h" }
+        let device = IoTAPIConfig.iotInstance().device
+        let capability = IoTAPIConfig.iotInstance().device?.capabilities[1]
+        //humidityChartLabel.text = String(format: "   %@", (capability?.properties![0].name?.uppercased())!)
+        IoTAPIConfig.iotInstance().readDeviceMeasures(of: capability!,
+                                                      device: device!) { (deviceMeasures) in
+                                                        DispatchQueue.main.async {
+                                                            self.drawChart(self.humidityChart,
+                                                                           deviceMeasures: deviceMeasures!,
+                                                                           seriesColor: ChartColors.blueColor())
+                                                        }
+        }
     }
     
     func drawLightChart() {
-        let data = [(x: 0.0, y: 0),
-                    (x: 3, y: 2.5),
-                    (x: 4, y: 2.1),
-                    (x: 5, y: 2.4),
-                    (x: 7, y: 2.9),
-                    (x: 8, y: 2.5),
-                    (x: 9, y: 2.3)]
-        let series = ChartSeries(data: data)
-        series.color = ChartColors.blueColor()
-        series.area = true
-        lightChart.add(series)
-        lightChart.delegate = self
-        lightChart.xLabelsFormatter = { String(Int(round($1))) + "h" }
+        let device = IoTAPIConfig.iotInstance().device
+        let capability = IoTAPIConfig.iotInstance().device?.capabilities[2]
+        //lightChartLabel.text = String(format: "   %@", (capability?.properties![0].name?.uppercased())!)
+        IoTAPIConfig.iotInstance().readDeviceMeasures(of: capability!,
+                                                      device: device!) { (deviceMeasures) in
+                                                        DispatchQueue.main.async {
+                                                            self.drawChart(self.lightChart,
+                                                                           deviceMeasures: deviceMeasures!,
+                                                                           seriesColor: ChartColors.blueColor())
+                                                        }
+                                                        
+        }
     }
     
     // Chart delegate

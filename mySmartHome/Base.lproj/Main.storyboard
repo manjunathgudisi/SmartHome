@@ -499,7 +499,7 @@
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbS-ze-twp">
                                                 <rect key="frame" x="8" y="246" width="359" height="230"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  AC Temperature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhk-vG-vmK">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Temperature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhk-vG-vmK">
                                                         <rect key="frame" x="0.0" y="0.0" width="359" height="44"/>
                                                         <color key="backgroundColor" red="0.99215686274509807" green="0.59999999999999998" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>

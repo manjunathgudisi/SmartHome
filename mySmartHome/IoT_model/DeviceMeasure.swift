@@ -53,7 +53,9 @@ public class DeviceMeasure {
 		capabilityId = dictionary["capabilityId"] as? String
 		sensorId = dictionary["sensorId"] as? String
 		timestamp = dictionary["timestamp"] as? Int
-		if (dictionary["measure"] != nil) { measure = Measure(dictionary: dictionary["measure"] as! NSDictionary) }
+		if (dictionary["measure"] != nil) {
+            measure = Measure(dictionary: dictionary["measure"] as! NSDictionary)
+        }
 	}
 
 		

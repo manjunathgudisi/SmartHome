@@ -88,7 +88,7 @@ open class Chart: UIControl {
     /**
      Orientation for the x-labels
      */
-    open var xLabelsOrientation: ChartLabelOrientation = .horizontal
+    open var xLabelsOrientation: ChartLabelOrientation = .vertical
 
     /**
      Skip the last x-label. Setting this to false may make the label overflow the frame width.
@@ -116,7 +116,7 @@ open class Chart: UIControl {
     /**
     Font used for the labels.
     */
-    open var labelFont: UIFont? = UIFont.systemFont(ofSize: 12)
+    open var labelFont: UIFont? = UIFont.systemFont(ofSize: 10)
 
     /**
     Font used for the labels.
@@ -134,7 +134,7 @@ open class Chart: UIControl {
     Color for the grid.
     */
     @IBInspectable
-    open var gridColor: UIColor = UIColor.gray.withAlphaComponent(0.3)
+    open var gridColor: UIColor = UIColor.gray.withAlphaComponent(0.8)
     /**
      Should draw lines for labels on X axis.
      */
@@ -147,7 +147,7 @@ open class Chart: UIControl {
     /**
     Height of the area at the bottom of the chart, containing the labels for the x-axis.
     */
-    open var bottomInset: CGFloat = 20
+    open var bottomInset: CGFloat = 40
 
     /**
     Height of the area at the top of the chart, acting a padding to make place for the top y-axis label.
@@ -198,7 +198,7 @@ open class Chart: UIControl {
     /**
     Alpha component for the area's color.
     */
-    open var areaAlphaComponent: CGFloat = 0.1
+    open var areaAlphaComponent: CGFloat = 0.4
 
     // MARK: Private variables
 

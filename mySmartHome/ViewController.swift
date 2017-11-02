@@ -27,6 +27,12 @@ class ViewController: UIViewController {
         //timer for sensortypes
         enableTimerToCheckSensorTypes()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        timerToCheckCapabilities?.invalidate()
+        timerToCheckSensorTypes?.invalidate()
+        super.viewWillDisappear(animated)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
