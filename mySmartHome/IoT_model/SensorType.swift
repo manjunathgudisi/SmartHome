@@ -17,6 +17,9 @@ public class SensorType {
 	public var alternateId : Int?
 	public var name : String?
 	public var capabilities : Array<Capability>?
+    
+    //ManjuGudisi: my own variables
+    public var gotAllTheValues = false
 
 /**
     Returns an array of models based on given dictionary.

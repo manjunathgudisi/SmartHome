@@ -17,6 +17,9 @@ public class Capability {
 	public var name : String?
 	public var alternateId : String?
 	public var properties : Array<Properties>?
+    
+    //ManjuGudisi: My own variables
+    public var gotAllTheValues = false
 
 /**
     Returns an array of models based on given dictionary.
@@ -53,7 +56,9 @@ public class Capability {
 		id = dictionary["id"] as? String
 		name = dictionary["name"] as? String
 		alternateId = dictionary["alternateId"] as? String
-        if (dictionary["properties"] != nil) { properties = Properties.modelsFromDictionaryArray(array: dictionary["properties"] as! NSArray) }
+        if (dictionary["properties"] != nil) {
+            properties = Properties.modelsFromDictionaryArray(array: dictionary["properties"] as! NSArray)
+        }
 	}
 
 		

@@ -25,6 +25,7 @@ public class Device {
     
     //ManjuGudisi: my own variables
     public var capabilities = [Capability]()
+    public var sensorTypes = [SensorType]()
 
 /**
     Returns an array of models based on given dictionary.
