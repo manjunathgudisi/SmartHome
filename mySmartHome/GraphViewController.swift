@@ -18,7 +18,6 @@ class GraphViewController: UIViewController, ChartDelegate {
     private var timerToRefreshChart : Timer? = nil
     private var dateFormatter = DateFormatter()
     
-    public var chartName = "Graph"
     public var capability : Capability? = nil
     public var seriesColor = UIColor.darkGray
 
@@ -26,12 +25,9 @@ class GraphViewController: UIViewController, ChartDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if chartNameLabel != nil {
-            chartNameLabel.text = chartName
-        }
-        
-        //setup dateFormatter
-        dateFormatter.dateFormat = "HH.mm"
+        chartNameLabel.text = capability?.name
+        dateFormatter.dateFormat = "HH.mm" //setup dateFormatter for charts X axis
+        enableTimerToRefreshChart()
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,7 +35,15 @@ class GraphViewController: UIViewController, ChartDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func viewWillDisappear(_ animated: Bool) {
+        timerToRefreshChart?.invalidate()
+        super.viewWillDisappear(animated)
+    }
+    
+    public func stopDrawingChart() {
+        timerToRefreshChart?.invalidate()
+    }
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -85,10 +89,12 @@ class GraphViewController: UIViewController, ChartDelegate {
     //MARK:- read capabilities
     
     func readCapabilityMeasures() {
+        activityController.startAnimating()
         let device = IoTAPIConfig.iotInstance().device
         IoTAPIConfig.iotInstance().readDeviceMeasures(of: capability!,
                                                       device: device!) { (deviceMeasures) in
                                                         DispatchQueue.main.async {
+                                                            self.activityController.stopAnimating()
                                                             self.drawChart(deviceMeasures: deviceMeasures!)
                                                         }
         }
@@ -97,17 +103,17 @@ class GraphViewController: UIViewController, ChartDelegate {
     //MARK:- ChartDelegate
     
     func didTouchChart(_ chart: Chart, indexes: Array<Int?>, x: Float, left: CGFloat) {
-        //Do something on touch
-        //        for item in indexes {
-        //            print(item)
-        //        }
-        
-        //        for (serieIndex, dataIndex) in indexes {
-        //            if dataIndex != nil {
-        //                // The series at serieIndex has been touched
-        //                let value = chart.valueForSeries(serieIndex, atIndex: dataIndex)
-        //            }
-        //        }
+//        //Do something on touch
+//        for item in indexes {
+//            print(item)
+//        }
+//
+//        for (serieIndex, dataIndex) in indexes {
+//            if dataIndex != nil {
+//                // The series at serieIndex has been touched
+//                let value = chart.valueForSeries(serieIndex, atIndex: dataIndex)
+//            }
+//        }
     }
     
     func didFinishTouchingChart(_ chart: Chart) {

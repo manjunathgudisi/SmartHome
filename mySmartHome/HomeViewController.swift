@@ -6,22 +6,13 @@
 //  Copyright © 2017 Gudisi Manjunath. All rights reserved.
 //
 
-import Foundation
-import SwiftChart
+import UIKit
 
-class HomeViewController : UIViewController, ChartDelegate {
-    
-    @IBOutlet var temperatureChart: Chart!
-    @IBOutlet var temperatureChartLabel: UILabel!
-    
-    @IBOutlet var humidityChart: Chart!
-    @IBOutlet var humidityChartLabel: UILabel!
-    
-    @IBOutlet var lightChart: Chart!
-    @IBOutlet var lightChartLabel: UILabel!
+class HomeViewController : UIViewController {
     
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var scrollContentView: UIView!
+    @IBOutlet var statsView: UIView!
     @IBOutlet var activityController: UIActivityIndicatorView!
     
     var serviceRequests = [ServiceRequest]()
@@ -36,17 +27,15 @@ class HomeViewController : UIViewController, ChartDelegate {
     var customers = [Customer]()
     @IBOutlet var loyaltyPointsCountLabel: UILabel!
     
-    private var timerToRefreshCharts : Timer? = nil
-    private var dateFormatter = DateFormatter()
+    private var charts = [GraphViewController]()
     
     //MARK: - Utils
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollView.contentSize = CGSize(width: view.frame.size.width, height: scrollContentView.frame.size.height)
         
-        //setup dateFormatter
-        dateFormatter.dateFormat = "HH.mm"
+        //add charts
+        addCharts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,123 +43,40 @@ class HomeViewController : UIViewController, ChartDelegate {
         
         //get backend data
         getBackendData()
-        
-        //draw charts
-        enableTimerToRefreshCharts()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        timerToRefreshCharts?.invalidate()
+        for chart in charts {
+            chart.stopDrawingChart()
+        }
         super.viewWillDisappear(animated)
     }
     
-    //MARK: - Draw charts
+    //MARK: - Add charts
     
-    func enableTimerToRefreshCharts() {
-        //timer for refreshing charts
-        timerToRefreshCharts = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { (timer) in
-            DispatchQueue.main.async {
-                self.drawCharts()
-            }
-        }
-    }
-    
-    func drawCharts() {
-        drawTemperatureChart()
-        drawHumidityChart()
-        drawLightChart()
-        activityController.startAnimating()
-    }
-    
-    func drawChart(_ chart: Chart, deviceMeasures: [DeviceMeasure], seriesColor: UIColor) {
-        var chartData = [(x: Float, y: Float)]()
-        for deviceMeasure in deviceMeasures {
-            let timeInternal = TimeInterval(deviceMeasure.timestamp!)/1000
-            let stringValue = self.dateFormatter.string(from: Date(timeIntervalSince1970:timeInternal))
-            //print(stringValue)
-            let object = (x: Float(stringValue)!, y: Float((deviceMeasure.measure?.value)!))
-            chartData.append(object)
+    func addCharts() {
+        let device = IoTAPIConfig.iotInstance().device
+        let capabilities = device?.capabilities
+        
+        let x = 8
+        let offset = (statsView.frame.origin.y + statsView.frame.size.height)
+        var frame = CGRect(x: CGFloat(x), y: offset+8, width: statsView.frame.size.width, height: statsView.frame.size.height)
+        
+        for capablity in capabilities! {
+            let chart = storyboard?.instantiateViewController(withIdentifier: "Chart") as! GraphViewController
+            chart.capability = capablity
+            charts.append(chart)
+            
+            //add to scroll view
+            chart.view.frame = frame
+            scrollContentView.addSubview(chart.view)
+            frame.origin.y += (offset + 8)
         }
         
-        //remove if any series
-        chart.series.removeAll()
-        
-        //then, add series
-        let series = ChartSeries(data: chartData)
-        series.color = seriesColor
-        series.area = true
-        chart.add(series)
-        chart.delegate = self
-        chart.xLabelsFormatter = {
-            String($1).replacingOccurrences(of: ".", with: ":")
-        }
-    }
-    
-    func drawTemperatureChart() {
-        let device = IoTAPIConfig.iotInstance().device
-        let capability = IoTAPIConfig.iotInstance().device?.capabilities[0]
-        //temperatureChartLabel.text = String(format: "   %@", (capability?.properties![0].name?.uppercased())!)
-        IoTAPIConfig.iotInstance().readDeviceMeasures(of: capability!,
-                                                      device: device!) { (deviceMeasures) in
-                                                        
-                                                        DispatchQueue.main.async {
-                                                            self.drawChart(self.temperatureChart,
-                                                                           deviceMeasures: deviceMeasures!,
-                                                                           seriesColor: ChartColors.darkGreenColor())
-                                                        }
-        }
-    }
-    
-    func drawHumidityChart() {
-        let device = IoTAPIConfig.iotInstance().device
-        let capability = IoTAPIConfig.iotInstance().device?.capabilities[1]
-        //humidityChartLabel.text = String(format: "   %@", (capability?.properties![0].name?.uppercased())!)
-        IoTAPIConfig.iotInstance().readDeviceMeasures(of: capability!,
-                                                      device: device!) { (deviceMeasures) in
-                                                        DispatchQueue.main.async {
-                                                            self.drawChart(self.humidityChart,
-                                                                           deviceMeasures: deviceMeasures!,
-                                                                           seriesColor: ChartColors.blueColor())
-                                                        }
-        }
-    }
-    
-    func drawLightChart() {
-        let device = IoTAPIConfig.iotInstance().device
-        let capability = IoTAPIConfig.iotInstance().device?.capabilities[2]
-        //lightChartLabel.text = String(format: "   %@", (capability?.properties![0].name?.uppercased())!)
-        IoTAPIConfig.iotInstance().readDeviceMeasures(of: capability!,
-                                                      device: device!) { (deviceMeasures) in
-                                                        DispatchQueue.main.async {
-                                                            self.drawChart(self.lightChart,
-                                                                           deviceMeasures: deviceMeasures!,
-                                                                           seriesColor: ChartColors.blueColor())
-                                                        }
-                                                        
-        }
-    }
-    
-    // Chart delegate
-    func didTouchChart(_ chart: Chart, indexes: Array<Int?>, x: Float, left: CGFloat) {
-        //Do something on touch
-//        for item in indexes {
-//            print(item)
-//        }
-        
-//        for (serieIndex, dataIndex) in indexes {
-//            if dataIndex != nil {
-//                // The series at serieIndex has been touched
-//                let value = chart.valueForSeries(serieIndex, atIndex: dataIndex)
-//            }
-//        }
-    }
-    
-    func didFinishTouchingChart(_ chart: Chart) {
-        // Do something when finished
-    }
-    
-    func didEndTouchingChart(_ chart: Chart) {
-        // Do something when ending touching chart
+        //set content size
+        scrollContentView.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: (frame.origin.y+frame.size.height))
+        scrollView.contentSize = CGSize(width: view.frame.size.width, height: scrollContentView.frame.size.height)
+        scrollView.setNeedsDisplay()
     }
     
     //MARK: - Get backend data
