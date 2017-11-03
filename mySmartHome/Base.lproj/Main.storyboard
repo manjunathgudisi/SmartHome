@@ -193,7 +193,7 @@
         <!--graph view-->
         <scene sceneID="mUm-br-ZPD">
             <objects>
-                <viewController title="graph view" id="tuB-vD-hD1" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Chart" title="graph view" id="tuB-vD-hD1" customClass="GraphViewController" customModule="mySmartHome" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="u0M-PG-v8F">
                         <rect key="frame" x="0.0" y="0.0" width="359" height="230"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -215,6 +215,13 @@
                                         <rect key="frame" x="0.0" y="48" width="359" height="182"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Kyx-14-Gni">
+                                        <rect key="frame" x="331" y="12" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="Oac-BL-IHj"/>
+                                            <constraint firstAttribute="width" constant="20" id="kip-Ga-SVU"/>
+                                        </constraints>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -224,6 +231,8 @@
                                     <constraint firstAttribute="bottom" secondItem="0XV-qr-1mC" secondAttribute="bottom" id="Vw6-To-4px"/>
                                     <constraint firstAttribute="trailing" secondItem="DfD-lm-2r3" secondAttribute="trailing" id="aE1-fX-Trl"/>
                                     <constraint firstItem="DfD-lm-2r3" firstAttribute="top" secondItem="oDg-Ha-SQH" secondAttribute="top" id="f1D-Aa-70t"/>
+                                    <constraint firstItem="Kyx-14-Gni" firstAttribute="top" secondItem="oDg-Ha-SQH" secondAttribute="top" constant="12" id="fCt-Fd-SaS"/>
+                                    <constraint firstAttribute="trailing" secondItem="Kyx-14-Gni" secondAttribute="trailing" constant="8" id="g71-If-X4X"/>
                                     <constraint firstItem="0XV-qr-1mC" firstAttribute="leading" secondItem="oDg-Ha-SQH" secondAttribute="leading" id="ujc-bn-WLJ"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -243,6 +252,11 @@
                         <viewLayoutGuide key="safeArea" id="ECU-xq-BJl"/>
                     </view>
                     <size key="freeformSize" width="359" height="230"/>
+                    <connections>
+                        <outlet property="activityController" destination="Kyx-14-Gni" id="Y4u-O5-MKS"/>
+                        <outlet property="chart" destination="0XV-qr-1mC" id="Iu4-yA-6zy"/>
+                        <outlet property="chartNameLabel" destination="DfD-lm-2r3" id="GQD-HD-NWe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eLH-fX-fvn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
