@@ -27,7 +27,6 @@ class GraphViewController: UIViewController, ChartDelegate {
         // Do any additional setup after loading the view.
         chartNameLabel.text = capability?.name
         dateFormatter.dateFormat = "HH.mm" //setup dateFormatter for charts X axis
-        enableTimerToRefreshChart()
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,8 +39,12 @@ class GraphViewController: UIViewController, ChartDelegate {
         super.viewWillDisappear(animated)
     }
     
-    public func stopDrawingChart() {
+    public func stopRefreshingChart() {
         timerToRefreshChart?.invalidate()
+    }
+    
+    public func startRefreshingChart() {
+        enableTimerToRefreshChart()
     }
     
     // MARK: - Navigation
@@ -54,6 +57,7 @@ class GraphViewController: UIViewController, ChartDelegate {
     //MARK:- draw chart
     
     private func enableTimerToRefreshChart() {
+        timerToRefreshChart?.invalidate()
         //timer for refreshing charts
         timerToRefreshChart = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { (timer) in
             DispatchQueue.main.async {

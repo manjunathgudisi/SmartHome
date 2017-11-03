@@ -45,11 +45,22 @@ class HomeViewController : UIViewController {
         getBackendData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        for chart in charts {
+            chart.startRefreshingChart()
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         for chart in charts {
-            chart.stopDrawingChart()
+            chart.stopRefreshingChart()
         }
         super.viewWillDisappear(animated)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     //MARK: - Add charts
