@@ -87,7 +87,7 @@ class HomeViewController : UIViewController, ChartDelegate {
         for deviceMeasure in deviceMeasures {
             let timeInternal = TimeInterval(deviceMeasure.timestamp!)/1000
             let stringValue = self.dateFormatter.string(from: Date(timeIntervalSince1970:timeInternal))
-            print(stringValue)
+            //print(stringValue)
             let object = (x: Float(stringValue)!, y: Float((deviceMeasure.measure?.value)!))
             chartData.append(object)
         }
@@ -117,7 +117,7 @@ class HomeViewController : UIViewController, ChartDelegate {
                                                             self.drawChart(self.temperatureChart,
                                                                            deviceMeasures: deviceMeasures!,
                                                                            seriesColor: ChartColors.darkGreenColor())
-                                                        } 
+                                                        }
         }
     }
     

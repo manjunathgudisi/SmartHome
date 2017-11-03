@@ -190,6 +190,64 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="132.68365817091455"/>
         </scene>
+        <!--graph view-->
+        <scene sceneID="mUm-br-ZPD">
+            <objects>
+                <viewController title="graph view" id="tuB-vD-hD1" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="u0M-PG-v8F">
+                        <rect key="frame" x="0.0" y="0.0" width="359" height="230"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oDg-Ha-SQH">
+                                <rect key="frame" x="0.0" y="0.0" width="359" height="230"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Temperature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DfD-lm-2r3">
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="44"/>
+                                        <color key="backgroundColor" red="0.99215686270000003" green="0.59999999999999998" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Mz8-HB-HTl"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0XV-qr-1mC" customClass="Chart" customModule="SwiftChart">
+                                        <rect key="frame" x="0.0" y="48" width="359" height="182"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="0XV-qr-1mC" secondAttribute="trailing" id="5ty-gD-5fS"/>
+                                    <constraint firstItem="0XV-qr-1mC" firstAttribute="top" secondItem="DfD-lm-2r3" secondAttribute="bottom" constant="4" id="DLa-1s-q3n"/>
+                                    <constraint firstItem="DfD-lm-2r3" firstAttribute="leading" secondItem="oDg-Ha-SQH" secondAttribute="leading" id="TKe-xy-oDF"/>
+                                    <constraint firstAttribute="bottom" secondItem="0XV-qr-1mC" secondAttribute="bottom" id="Vw6-To-4px"/>
+                                    <constraint firstAttribute="trailing" secondItem="DfD-lm-2r3" secondAttribute="trailing" id="aE1-fX-Trl"/>
+                                    <constraint firstItem="DfD-lm-2r3" firstAttribute="top" secondItem="oDg-Ha-SQH" secondAttribute="top" id="f1D-Aa-70t"/>
+                                    <constraint firstItem="0XV-qr-1mC" firstAttribute="leading" secondItem="oDg-Ha-SQH" secondAttribute="leading" id="ujc-bn-WLJ"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oDg-Ha-SQH" firstAttribute="trailing" secondItem="ECU-xq-BJl" secondAttribute="trailing" id="I0X-Jf-RYT"/>
+                            <constraint firstItem="oDg-Ha-SQH" firstAttribute="leading" secondItem="ECU-xq-BJl" secondAttribute="leading" id="LwA-ls-tkc"/>
+                            <constraint firstItem="oDg-Ha-SQH" firstAttribute="bottom" secondItem="ECU-xq-BJl" secondAttribute="bottom" id="aKZ-WK-QrT"/>
+                            <constraint firstItem="oDg-Ha-SQH" firstAttribute="top" secondItem="ECU-xq-BJl" secondAttribute="top" id="aLL-hI-c5t"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ECU-xq-BJl"/>
+                    </view>
+                    <size key="freeformSize" width="359" height="230"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eLH-fX-fvn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="881" y="-358"/>
+        </scene>
         <!--Home View Controller-->
         <scene sceneID="cWb-af-Huz">
             <objects>
@@ -569,7 +627,7 @@
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Energy Consumption" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qlb-HP-LkO">
                                                         <rect key="frame" x="0.0" y="0.0" width="359" height="44"/>
-                                                        <color key="backgroundColor" red="0.26666666666666666" green="0.36862745098039218" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" red="0.99215686274509807" green="0.59999999999999998" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="oCL-uQ-V5E"/>
                                                         </constraints>
@@ -790,7 +848,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eir-kv-OAl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="894" y="830"/>
+            <point key="canvasLocation" x="1660" y="837"/>
         </scene>
     </scenes>
     <resources>

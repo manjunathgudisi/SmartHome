@@ -24,6 +24,7 @@
 		2725BF751F9DC7210046B892 /* home_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2725BF741F9DC7210046B892 /* home_icon.png */; };
 		273D832B1F9C8F79004AB1E8 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 273D832A1F9C8F79004AB1E8 /* Podfile */; };
 		273D832D1F9CA695004AB1E8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273D832C1F9CA695004AB1E8 /* HomeViewController.swift */; };
+		2764937F1FAC30280004A0BF /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2764937E1FAC30280004A0BF /* GraphViewController.swift */; };
 		2790FF1D1FA89EDE00FF67CD /* DeviceMeasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2790FF1B1FA89EDE00FF67CD /* DeviceMeasure.swift */; };
 		2790FF1E1FA89EDE00FF67CD /* Measure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2790FF1C1FA89EDE00FF67CD /* Measure.swift */; };
 		2790FF201FA8A3B000FF67CD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2790FF1F1FA8A3B000FF67CD /* Settings.bundle */; };
@@ -59,6 +60,7 @@
 		2725BF741F9DC7210046B892 /* home_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_icon.png; sourceTree = "<group>"; };
 		273D832A1F9C8F79004AB1E8 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		273D832C1F9CA695004AB1E8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		2764937E1FAC30280004A0BF /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		2790FF1B1FA89EDE00FF67CD /* DeviceMeasure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceMeasure.swift; sourceTree = "<group>"; };
 		2790FF1C1FA89EDE00FF67CD /* Measure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Measure.swift; sourceTree = "<group>"; };
 		2790FF1F1FA8A3B000FF67CD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				27AD973E1FA5BE090063E28A /* ServiceRequestsTableViewController.swift */,
 				27AD97521FA5FC9E0063E28A /* NewServiceRequestViewController.swift */,
 				27AD97501FA5F4E90063E28A /* CustomTableViewCell.swift */,
+				2764937E1FAC30280004A0BF /* GraphViewController.swift */,
 				271D87411F94C3ED00CF1E35 /* Main.storyboard */,
 				271D87441F94C3ED00CF1E35 /* Assets.xcassets */,
 				271D87461F94C3ED00CF1E35 /* LaunchScreen.storyboard */,
@@ -335,6 +338,7 @@
 				27AD974E1FA5E7730063E28A /* APIConfig.swift in Sources */,
 				271D873E1F94C3EC00CF1E35 /* AppDelegate.swift in Sources */,
 				27AD974A1FA5BEF80063E28A /* User.swift in Sources */,
+				2764937F1FAC30280004A0BF /* GraphViewController.swift in Sources */,
 				271C54EC1FA710A0007228B3 /* Formatter.swift in Sources */,
 				271C54E01FA6FD6B007228B3 /* IoTAPIConfig.swift in Sources */,
 				273D832D1F9CA695004AB1E8 /* HomeViewController.swift in Sources */,
